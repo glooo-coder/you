@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Hugging Site</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffc0cb; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cat-gif {
+            max-width: 100%;
+            width: 350px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .yes {
+            background-color: #28a745; 
+        }
+
+        .no {
+            background-color: #dc3545; 
+        }
+
+        .button:hover {
+            opacity: 0.8;
+        }
+
+        #yesButton.no-transition {
+            transition: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .new-message {
+            font-size: 24px;
+            color: #28a745;
+            margin-top: 20px;
+        }
+
+        .question {
+            font-size: 24px;
+            color: #ff69b4; 
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <div id="questionText" class="question">Will you be my girlfriend?</div>
+
+        <img id="catHugGif" src="1.gif" alt="Cats Looking at Each Other" class="cat-gif">
+
+        <div class="buttons" id="buttonsContainer">
+            <button id="yesButton" class="button yes" onclick="handleYesButtonClick()">Yes</button>
+            <button id="noButton" class="button no" onclick="growYesButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        let scaleFactor = 1;
+        let clickCount = 0;
+        const noButtonTexts = [
+            "Are you sure?", 
+            "You might regret this!", 
+            "Have a heart!", 
+            "You're breaking my heart ;(", 
+            "Is that your final answer?"
+        ];
+
+        function handleYesButtonClick() {
+            const buttonsContainer = document.getElementById("buttonsContainer");
+            const catHugGif = document.getElementById("catHugGif");
+            const questionText = document.getElementById("questionText");
+            const mainContainer = document.getElementById("mainContainer");
+
+            questionText.classList.add("hidden");
+            buttonsContainer.classList.add("hidden");
+            catHugGif.classList.add("hidden");
+
+            catHugGif.src = "2.gif"; 
+
+            catHugGif.classList.remove("hidden");
+
+            const message = document.createElement("div");
+            message.classList.add("new-message");
+            message.textContent = "yayyy! love you :)";
+            mainContainer.appendChild(message);
+        }
+
+        function growYesButton() {
+            scaleFactor *= 1.15;
+            const yesButton = document.getElementById("yesButton");
+            yesButton.style.transform = `scale(${scaleFactor})`;
+
+            const noButton = document.getElementById("noButton");
+            noButton.textContent = noButtonTexts[clickCount % noButtonTexts.length];
+
+            clickCount++;
+
+            if (clickCount >= 5) {
+                noButton.style.display = "none";
+
+                yesButton.textContent = "You thought that you have options, didn't you? Yes is your only answer, babe!";
+                yesButton.classList.add("no-transition");
+
+                yesButton.style.transform = "scale(1)";
+                yesButton.style.width = "350px";
+                yesButton.style.padding = "30px";
+                yesButton.style.fontSize = "20px";
+            }
+        }
+    </script>
+
+</body>
+</html>
